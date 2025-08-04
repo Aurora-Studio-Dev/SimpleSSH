@@ -1,0 +1,161 @@
+﻿<Page x:Class="SimpleSSH.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+      mc:Ignorable="d"
+      Title="HomePage">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 欢迎标题 -->
+        <TextBlock
+            Grid.Row="0"
+            x:Name="LittleTips"
+            FontSize="24"
+            FontWeight="Light"
+            Margin="0,0,0,20" />
+
+        <!-- 操作按钮区域 -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource {x:Static ui:ThemeKeys.CardBackgroundFillColorDefaultBrushKey}}"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,20">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                    <TextBlock Text="服务器管理" FontSize="18" FontWeight="SemiBold" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="SelectAllCheckBox"
+                              Content="全选"
+                              Checked="SelectAllCheckBox_Checked"
+                              Unchecked="SelectAllCheckBox_Unchecked"
+                              VerticalAlignment="Center"
+                              Margin="0,0,20,0" />
+
+                    <Button x:Name="AddButton"
+                            Height="35"
+                            MinWidth="100"
+                            Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                            Click="Add_Click"
+                            Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE710;" FontSize="16" />
+                            <TextBlock Text="添加" Margin="8,0,0,0" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="EditButton"
+                            Height="35"
+                            MinWidth="100"
+                            Style="{DynamicResource {x:Static ui:ThemeKeys.DefaultButtonStyleKey}}"
+                            Click="Edit_Click"
+                            Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE773;" FontSize="16" />
+                            <TextBlock Text="编辑" Margin="8,0,0,0" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="DeleteButton"
+                            Height="35"
+                            MinWidth="100"
+                            Style="{DynamicResource {x:Static ui:ThemeKeys.DefaultButtonStyleKey}}"
+                            Click="Delete_Click"
+                            Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:FontIcon Glyph="&#xE74D;" FontSize="16" />
+                            <TextBlock Text="删除" Margin="8,0,0,0" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- 服务器列表区域 -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource {x:Static ui:ThemeKeys.CardBackgroundFillColorDefaultBrushKey}}"
+                CornerRadius="8"
+                Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="服务器列表"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,15" />
+
+                <!-- 列标题 -->
+                <Border Grid.Row="1"
+                        Background="{DynamicResource {x:Static ui:ThemeKeys.ControlFillColorSecondaryBrushKey}}"
+                        Padding="10,8"
+                        CornerRadius="4"
+                        Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="选择" Width="50" FontWeight="SemiBold" />
+                        <TextBlock Text="服务器名称" Width="200" FontWeight="SemiBold" />
+                        <TextBlock Text="IP地址" Width="150" FontWeight="SemiBold" Margin="10,0,0,0" />
+                        <TextBlock Text="端口" Width="80" FontWeight="SemiBold" Margin="10,0,0,0" />
+                        <TextBlock Text="用户名" Width="150" FontWeight="SemiBold" Margin="10,0,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <!-- 服务器列表 -->
+                <ListView Grid.Row="2"
+                          x:Name="ServerListView"
+                          SelectionMode="Single"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0,0,0,5" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Background="{DynamicResource {x:Static ui:ThemeKeys.ControlFillColorDefaultBrushKey}}"
+                                CornerRadius="6"
+                                Padding="10,8">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                              VerticalAlignment="Center"
+                                              Width="50" />
+                                    <TextBlock Text="{Binding ServerName}"
+                                               FontWeight="Normal"
+                                               Width="200"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding ServerIp}"
+                                               Width="150"
+                                               Margin="10,0,0,0"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding ServerPort}"
+                                               Width="80"
+                                               Margin="10,0,0,0"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding ServerUsername}"
+                                               Width="150"
+                                               Margin="10,0,0,0"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

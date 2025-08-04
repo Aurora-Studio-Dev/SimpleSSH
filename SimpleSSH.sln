@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSSH", "SimpleSSH\SimpleSSH.csproj", "{35908D55-D8F3-4FE2-9A0C-A37F00B54F54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35908D55-D8F3-4FE2-9A0C-A37F00B54F54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35908D55-D8F3-4FE2-9A0C-A37F00B54F54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35908D55-D8F3-4FE2-9A0C-A37F00B54F54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35908D55-D8F3-4FE2-9A0C-A37F00B54F54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
