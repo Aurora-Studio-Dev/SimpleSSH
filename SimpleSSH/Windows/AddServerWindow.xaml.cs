@@ -21,7 +21,6 @@ public partial class AddServerWindow : Window
             return;
         }
 
-        // 验证端口
         if (!int.TryParse(ServerPort.Text, out var port) || port < 1 || port > 65535)
         {
             MessageBox.Show("请输入有效的端口号（1-65535）", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -3,7 +3,44 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
       mc:Ignorable="d"
-      Title="SettingsPage" Height="450" Width="800">
-    <Grid />
+      Title="SettingsPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Text="设置"
+            FontSize="24"
+            FontWeight="Light"
+            Margin="0,0,0,20" />
+        <StackPanel Grid.Row="1">
+            <TextBlock
+                Text="个性化"
+                FontSize="16"
+                FontWeight="Bold" />
+            <ui:SettingsCard
+                Margin="0,5,0,0"
+                Header="主题"
+                Description="配置应用程序的主题">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon
+                        Icon="{x:Static ui:SegoeFluentIcons.Light}"
+                        FontSize="16" />
+                </ui:SettingsCard.HeaderIcon>
+                <ui:SettingsCard.Content>
+                    <ComboBox Width="100"
+                              Height="30"
+                              x:Name="AppTheme"
+                              SelectionChanged="AppTheme_SelectionChanged">
+                        <ComboBoxItem>浅色</ComboBoxItem>
+                        <ComboBoxItem>深色</ComboBoxItem>
+                    </ComboBox>
+                </ui:SettingsCard.Content>
+            </ui:SettingsCard>
+        </StackPanel>
+    </Grid>
 </Page>

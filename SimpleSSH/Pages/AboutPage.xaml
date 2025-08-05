@@ -1,0 +1,75 @@
+﻿<Page x:Class="SimpleSSH.Pages.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+      mc:Ignorable="d"
+      Title="AboutPage" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Text="关于"
+            FontSize="24"
+            FontWeight="Light"
+            Margin="0,0,0,20" />
+        <StackPanel 
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <Image
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="../Image/logo.png"
+                Width="150"
+                Height="150"
+                />
+            <TextBlock
+                Margin="0,15"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="SimpleSSH 是一款基于 Fluent 设计语言构建的 SSH 客户端"/>
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                        Margin="5"
+                        Click="Gh_OnClick"
+                        Content="GitHub 项目主页"/>
+                <Button Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                        Margin="5"
+                        Click="Bl_OnClick"
+                        Content="Bilbili"/>
+                <Button Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                        Margin="5"
+                        Click="Qq_OnClick"
+                        Content="QQ 群"/>
+                <Button Margin="5"
+                        Click="Fb_OnClick"
+                        Content="Facebook"/>
+                <Button Margin="5"
+                        Click="Yt_OnClick"
+                        Content="Youtube"/>
+            </StackPanel>
+            <StackPanel Margin="15">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="SimpleSSH 版本："
+                    x:Name="ThisVersion"/>
+                <Button
+                    Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,10"
+                    Content="检查更新"
+                    Click="ButtonBase_OnClick"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

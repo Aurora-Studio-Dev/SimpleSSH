@@ -1,12 +1,12 @@
-﻿<Page x:Class="SimpleSSH.Pages.SSHPage"
+<Page x:Class="SimpleSSH.Pages.SshPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
       mc:Ignorable="d"
-      Title="SSHPage">
-    <Grid Margin="20">
+      Title="SshPage">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -20,17 +20,9 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LeftColumn" Width="300" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition x:Name="LeftColumn" Width="200" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <!-- 分割器 -->
-            <GridSplitter Grid.Column="1"
-                          Width="5"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Stretch"
-                          Background="Transparent" />
 
             <Border Grid.Column="0"
                     Background="{DynamicResource {x:Static ui:ThemeKeys.CardBackgroundFillColorDefaultBrushKey}}"
@@ -38,145 +30,169 @@
                     Padding="20"
                     Margin="0,0,10,0">
                 <StackPanel>
-                    <TextBlock Text="连接设置"
-                               FontSize="18"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,20" />
+                    <ui:SettingsExpander
+                        IsExpanded="True"
+                        Description="每次新建会话直接在这里连接就可以了哦">
+                        <ui:SettingsExpander.Header>
+                            <TextBlock
+                                Text="连接设置"
+                                FontWeight="Bold" />
+                        </ui:SettingsExpander.Header>
+                        <ui:SettingsExpander.Items>
+                            <Grid Margin="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text="服务器:"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,15,10" />
+                                <ComboBox Grid.Row="0" Grid.Column="1"
+                                          x:Name="ServerComboBox"
+                                          Height="35"
+                                          Margin="0,0,0,10"
+                                          DisplayMemberPath="ServerName"
+                                          SelectionChanged="ServerComboBox_SelectionChanged" />
 
-                        <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Text="服务器:"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,15,10" />
-                        <ComboBox Grid.Row="0" Grid.Column="1"
-                                  x:Name="ServerComboBox"
-                                  Height="35"
-                                  Margin="0,0,0,10"
-                                  DisplayMemberPath="ServerName"
-                                  SelectionChanged="ServerComboBox_SelectionChanged" />
-                        
-                        <TextBlock Grid.Row="1" Grid.Column="1"
-                                   x:Name="ServerInfo"
-                                   Height="35"
-                                   Margin="0,0,0,10"
-                                   VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="1" Grid.Column="1"
+                                           x:Name="ServerInfo"
+                                           Height="35"
+                                           Margin="0,0,0,10"
+                                           VerticalAlignment="Center" />
 
-                        <TextBlock Grid.Row="2" Grid.Column="0"
-                                   Text="密码:"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,15,15" />
-                        <PasswordBox Grid.Row="2" Grid.Column="1"
-                                     x:Name="PasswordBox"
-                                     Height="35"
-                                     Margin="0,0,0,15"
-                                     VerticalContentAlignment="Center" />
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                           Text="密码:"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,15,15" />
+                                <PasswordBox Grid.Row="2" Grid.Column="1"
+                                             x:Name="PasswordBox"
+                                             Height="35"
+                                             Margin="0,0,0,15"
+                                             VerticalContentAlignment="Center" />
 
-                        <StackPanel Grid.Row="3" Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Orientation="Horizontal"
-                                    HorizontalAlignment="Right">
-                            <Button x:Name="ConnectButton"
-                                    Content="连接"
-                                    Height="35"
-                                    MinWidth="100"
-                                    Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
-                                    Click="ConnectButton_Click"
-                                    Margin="0,0,10,0" />
-                            <Button x:Name="DisconnectButton"
-                                    Content="断开"
-                                    Height="35"
-                                    MinWidth="100"
-                                    Click="DisconnectButton_Click"
-                                    Margin="0,0,0,0"
-                                    Visibility="Collapsed" />
-                        </StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right">
+                                    <Button x:Name="ConnectButton"
+                                            Content="连接"
+                                            Height="35"
+                                            MinWidth="100"
+                                            Style="{DynamicResource {x:Static ui:ThemeKeys.AccentButtonStyleKey}}"
+                                            Click="ConnectButton_Click"
+                                            Margin="0,0,10,0" />
+                                    <Button x:Name="DisconnectButton"
+                                            Content="断开"
+                                            Height="35"
+                                            MinWidth="100"
+                                            Click="DisconnectButton_Click"
+                                            Margin="0,0,0,0"
+                                            Visibility="Collapsed" />
+                                </StackPanel>
 
-                        <StackPanel Grid.Row="4" Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,10,0,0">
-                            <ProgressBar x:Name="ConnectionProgressBar"
-                                         Height="10"
-                                         IsIndeterminate="False"
-                                         Visibility="Collapsed" />
-                            <TextBlock x:Name="ConnectionStatusText"
-                                       Text="正在连接..."
-                                       HorizontalAlignment="Center"
-                                       Visibility="Collapsed"
-                                       FontSize="12"
-                                       Margin="0,5,0,0"
-                                       Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}" />
-                        </StackPanel>
-                    </Grid>
+                                <StackPanel Grid.Row="4" Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            Margin="0,10,0,0">
+                                    <ProgressBar x:Name="ConnectionProgressBar"
+                                                 Height="10"
+                                                 IsIndeterminate="False"
+                                                 Visibility="Collapsed" />
+                                    <TextBlock x:Name="ConnectionStatusText"
+                                               Text="正在连接..."
+                                               HorizontalAlignment="Center"
+                                               Visibility="Collapsed"
+                                               FontSize="12"
+                                               Margin="0,5,0,0"
+                                               Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}" />
+                                </StackPanel>
+                            </Grid>
+                        </ui:SettingsExpander.Items>
+                    </ui:SettingsExpander>
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="2"
-                    Background="{DynamicResource {x:Static ui:ThemeKeys.CardBackgroundFillColorDefaultBrushKey}}"
-                    CornerRadius="8"
-                    Padding="20"
-                    Margin="10,0,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0"
-                               Text="终端"
-                               FontSize="18"
-                               FontWeight="SemiBold"
-                               Margin="0,0,0,20" />
+                <TextBox Grid.Row="1"
+                         x:Name="TerminalTextBox"
+                         Background="Black"
+                         Foreground="LightGray"
+                         FontFamily="Consolas"
+                         FontSize="14"
+                         IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Margin="0,32,0,0"
+                         Padding="10" />
 
-                    <TextBox Grid.Row="1"
-                             x:Name="TerminalTextBox"
-                             Background="Black"
-                             Foreground="LightGray"
-                             FontFamily="Consolas"
-                             FontSize="14"
-                             IsReadOnly="True"
-                             VerticalScrollBarVisibility="Auto"
-                             HorizontalScrollBarVisibility="Auto"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             Padding="10" />
+                <Grid Grid.Row="2" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Row="2" Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             x:Name="CommandTextBox"
+                             Height="35"
+                             VerticalContentAlignment="Center"
+                             KeyDown="CommandTextBox_KeyDown"
+                             IsEnabled="False" />
 
-                        <TextBox Grid.Column="0"
-                                 x:Name="CommandTextBox"
-                                 Height="35"
-                                 VerticalContentAlignment="Center"
-                                 KeyDown="CommandTextBox_KeyDown"
-                                 IsEnabled="False" />
-
-                        <Button Grid.Column="1"
-                                x:Name="SendButton"
-                                Content="发送"
-                                Height="35"
-                                MinWidth="80"
-                                Margin="10,0,0,0"
-                                Click="SendButton_Click"
-                                IsEnabled="False" />
-                    </Grid>
+                    <Button Grid.Column="1"
+                            x:Name="SendButton"
+                            Content="发送"
+                            Height="35"
+                            MinWidth="80"
+                            Margin="10,0,0,0"
+                            Click="SendButton_Click"
+                            IsEnabled="False" />
                 </Grid>
-            </Border>
+            </Grid>
+
+            <TabControl Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        x:Name="TerminalTabControl">
+                <TabControl.Template>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TabPanel Grid.Row="0" IsItemsHost="True" />
+                            <Border Grid.Row="1"
+                                    Background="{DynamicResource {x:Static ui:ThemeKeys.CardBackgroundFillColorDefaultBrushKey}}"
+                                    CornerRadius="0,0,8,8">
+                                <ContentPresenter ContentSource="SelectedContent" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </TabControl.Template>
+                <TabItem Header="欢迎">
+                    <Grid>
+                        <TextBlock
+                            Text="请选择一个服务器并点击连接按钮开始SSH会话&#13;您可以在上方的标签页切换会话进程，点击x关闭进程"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}" />
+                    </Grid>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Page>

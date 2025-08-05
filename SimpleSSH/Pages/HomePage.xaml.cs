@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Security.Principal;
 using System.Windows;
+using System.Windows.Threading;
 using SimpleSSH.Helper;
 using SimpleSSH.Windows;
+using MessageBox = iNKORE.UI.WPF.Modern.Controls.MessageBox;
+
 
 namespace SimpleSSH.Pages;
 
@@ -13,6 +16,19 @@ public partial class HomePage
         InitializeComponent();
         SetLittleTips();
         LoadServerList();
+    }
+
+    public void Refresh()
+    {
+        var frame = new DispatcherFrame();
+        Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background,
+            new DispatcherOperationCallback(delegate(object f)
+                {
+                    ((DispatcherFrame)f).Continue = false;
+                    return null;
+                }
+            ), frame);
+        Dispatcher.PushFrame(frame);
     }
 
     private void SetLittleTips()
@@ -43,6 +59,7 @@ public partial class HomePage
         addServerWindow.Owner = Window.GetWindow(this);
         addServerWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         if (addServerWindow.ShowDialog() == true) LoadServerList();
+        Refresh();
     }
 
     private void SelectAllCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -51,6 +68,7 @@ public partial class HomePage
         if (servers != null)
             foreach (var server in servers)
                 server.IsSelected = true;
+        Refresh();
     }
 
     private void SelectAllCheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -59,6 +77,7 @@ public partial class HomePage
         if (servers != null)
             foreach (var server in servers)
                 server.IsSelected = false;
+        Refresh();
     }
 
     private void Delete_Click(object sender, RoutedEventArgs e)
@@ -76,7 +95,7 @@ public partial class HomePage
                     foreach (var server in selectedServers)
                         ServerInfoConfigHelper.CurrentConfig.Servers.Remove(server.ServerInfo);
                     ServerInfoConfigHelper.SaveConfig();
-                    LoadServerList(); // 重新加载列表
+                    LoadServerList();
                 }
             }
             else
@@ -84,6 +103,8 @@ public partial class HomePage
                 MessageBox.Show("请先选择要删除的服务器。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        Refresh();
     }
 
     private void Edit_Click(object sender, RoutedEventArgs e)
@@ -103,18 +124,21 @@ public partial class HomePage
                 var editWindow = new EditServerInfo(selectedServers[0].ServerInfo);
                 editWindow.Owner = Window.GetWindow(this);
                 editWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                if (editWindow.ShowDialog() == true) LoadServerList(); // 重新加载列表以反映更改
+                if (editWindow.ShowDialog() == true) LoadServerList();
             }
             else
             {
                 MessageBox.Show("请选择一个要编辑的服务器。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        Refresh();
     }
 
     private void Refresh_Click(object sender, RoutedEventArgs e)
     {
         LoadServerList();
+        Refresh();
     }
 }
 
