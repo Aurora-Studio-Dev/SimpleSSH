@@ -66,6 +66,7 @@ public static class SettingsConfigHelper
 
     public class SettingsConfig
     {
-        public string AppTheme { get; set; } = string.Empty;
+        public string AppTheme { get; set; } = "Light";
+        public string AppWindow { get; set; } = "Mica";
     }
 }

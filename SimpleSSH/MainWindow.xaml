@@ -38,6 +38,7 @@
         <ui:NavigationView
             x:Name="NavigationView"
             ItemInvoked="NavigationTriggered"
+            IsBackButtonVisible="Collapsed"
             PaneDisplayMode="Top"
             Grid.Row="1">
             <ui:NavigationView.MenuItems>
