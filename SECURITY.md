@@ -4,10 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| dev 0.x | :x:                |
+| dev 0.1 | :x:                |
+| dev 0.2 | :white_check_mark: |
 
 ## 报告 Bug
 
